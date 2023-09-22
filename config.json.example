@@ -1,0 +1,31 @@
+{
+    "enviornments":[
+        {
+            "url":"https://portainer1.com/portainer/api/endpoints/1/docker/services",
+            "name":"Enviornment1",
+            "apiKey":"testme"
+        },
+        {
+            "url":"https://portainer2.com/portainer/api/endpoints/1/docker/services",
+            "name":"Enviornment2",
+            "apiKey":"testme2"
+        }             
+    ],
+    "useStacks":0,
+    "exclude":[
+        {
+            "name":"portainer/portainer-ce"
+        },
+        {
+            "name":"traefik"
+        }
+    ],
+    "includeStacks":[
+        {
+            "name":"clamav"
+        },
+        {
+            "name":"portainer/agent"
+        }
+    ]    
+}
