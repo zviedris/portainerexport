@@ -1,0 +1,5 @@
+# Ignore a config to not to push it
+config.json
+
+# Ignore output
+output.xlsx
