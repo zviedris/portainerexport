@@ -1,5 +1,5 @@
 {
-    "enviornments":[
+    "environments":[
         {
             "url":"https://portainer1.com/portainer/api/endpoints/1/docker/services",
             "name":"Enviornment1",

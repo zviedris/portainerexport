@@ -28,6 +28,13 @@ func ExportExcel(dataPtr *map[string][]model.EnvVersion) {
 	// Sort the slice of keys in alphabetical order
 	sort.Strings(keys)
 
+	headerRow := sheet.AddRow()
+	headerRow.AddCell().SetString("Image")
+	headerRow.AddCell().SetString("Environment")
+	headerRow.AddCell().SetString("Version")
+	headerRow.AddCell().SetString("Stack")
+	headerRow.AddCell().SetString("Image url")
+
 	// Write data from the struct to the Excel file
 	for _, key := range keys {
 		dataRow := sheet.AddRow()
@@ -36,7 +43,7 @@ func ExportExcel(dataPtr *map[string][]model.EnvVersion) {
 		for _, version := range containers {
 			dataRow1 := sheet.AddRow()
 			dataRow1.AddCell().SetString(" ")
-			dataRow1.AddCell().SetString(version.Enviornment)
+			dataRow1.AddCell().SetString(version.Environment)
 			dataRow1.AddCell().SetString(version.Docker)
 			dataRow1.AddCell().SetString(version.Stack)
 			dataRow1.AddCell().SetString(version.DockerPath)
