@@ -40,6 +40,11 @@ func callPortainer(env model.Enviornment, client *http.Client, config *model.Con
 	}
 	defer response.Body.Close()
 
+	if response.StatusCode != 200 {
+		fmt.Printf("Request %s failed with status code: %d\n", req.URL, response.StatusCode)
+		return results
+	}
+
 	// Read the response body
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
@@ -68,7 +73,7 @@ func callPortainer(env model.Enviornment, client *http.Client, config *model.Con
 			path := strings.Split(images[0], "/")
 			key := path[len(path)-1]
 			var value model.EnvVersion
-			value.Enviornment = env.Name
+			value.Environment = env.Name
 			value.Docker = images[1]
 			value.Stack = cont.Spec.Labels.Namespace
 			value.DockerPath = images[0]
@@ -85,7 +90,7 @@ func ProcessPortainer(config *model.Config) map[string][]model.EnvVersion {
 
 	results := map[string][]model.EnvVersion{}
 
-	for _, env := range config.Enviornments {
+	for _, env := range config.Environments {
 
 		//ignore that Portainer need verified certificate
 		tr := &http.Transport{

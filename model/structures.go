@@ -1,7 +1,7 @@
 package model
 
 type Config struct {
-	Enviornments []Enviornment `json:"enviornments"`
+	Environments []Enviornment `json:"environments"`
 	Stacks       []Stack       `json:"includeStacks"`
 	UseStacks    int16         `json:"useStacks"`
 	Exclude      []Stack       `json:"exclude"`
@@ -36,7 +36,7 @@ type Labels struct {
 }
 
 type EnvVersion struct {
-	Enviornment string `json:"enviornment"`
+	Environment string `json:"environment"`
 	Stack       string `json:"stack"`
 	Docker      string `json:"docker"`
 	DockerPath  string `json:"dockerPath"`
