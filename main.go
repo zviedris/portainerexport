@@ -5,6 +5,7 @@ import (
 	"fmt"
 	os "os"
 
+	flag "github.com/spf13/pflag"
 	model "github.com/zviedris/portainerexport/model"
 	processing "github.com/zviedris/portainerexport/processing"
 )
@@ -27,10 +28,15 @@ func main() {
 
 	}
 
+	var outputFormat *string = flag.String("format", "excel", "Format in which to render output. Supported formats: excel, markdown")
+	flag.Parse()
+
 	//do request and get info
 	results := processing.ProcessPortainer(&config)
 
-	//export results to Excel
-	processing.ExportExcel(&results)
-
+	if outputFormat == nil || *outputFormat == "excel" {
+		processing.ExportExcel(&results)
+	} else if *outputFormat == "markdown" {
+		processing.ExportMarkdown(&results)
+	}
 }
