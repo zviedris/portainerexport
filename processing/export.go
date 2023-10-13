@@ -2,7 +2,9 @@ package processing
 
 import (
 	"fmt"
+	"os"
 	"sort"
+	"strings"
 
 	xlsx "github.com/tealeg/xlsx"
 	model "github.com/zviedris/portainerexport/model"
@@ -58,4 +60,46 @@ func ExportExcel(dataPtr *map[string][]model.EnvVersion) {
 		return
 	}
 
+}
+
+func ExportMarkdown(dataPtr *map[string][]model.EnvVersion) {
+	file, err := os.Create("output.md")
+	if err != nil {
+		fmt.Println("Error creating file:", err)
+		return
+	}
+	defer file.Close()
+	data := *dataPtr
+	// Convert map keys into a slice
+	var keys []string
+	for key := range data {
+		keys = append(keys, key)
+	}
+
+	// Sort the slice of keys in alphabetical order
+	sort.Strings(keys)
+
+	var builder strings.Builder
+
+	builder.WriteString("| Image   | Environment | Version | Stack |Image url     |\n")
+	builder.WriteString("|---------|-------------|---------|-------|--------------|\n")
+
+	// Write data from the struct to the Excel file
+	for _, key := range keys {
+		builder.WriteString(fmt.Sprintf("|%s|||||\n", key))
+		containers := data[key]
+		for _, version := range containers {
+			builder.WriteString(fmt.Sprintf("| |%s|%s|%s|%s|\n", version.Environment, version.Docker, version.Stack, version.DockerPath))
+		}
+
+	}
+
+	// Write the content to the file
+	_, err = file.WriteString(builder.String())
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
+		return
+	}
+
+	fmt.Println("File written successfully")
 }
